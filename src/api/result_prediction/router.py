@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.auth.utils import get_current_user
+from src.api.auth.utils.auth_utils import get_current_user
 from src.api.result_prediction.schemas import PaginationResultPredictionOutDto, ResultPredictionPutDto, \
     ResultPredictionOutDto
 from src.api.result_prediction.service import ResultPredictionService

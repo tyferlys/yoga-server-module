@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.auth.utils import get_current_admin
+from src.api.auth.utils.auth_utils import get_current_admin
 from src.api.user.schemas import UserOutDto
 from src.api.yoga_pose.schemas import YogaPoseOutDto, PaginationYogaPoseOutDto, YogaPosePutDto
 from src.api.yoga_pose.service import YogaPoseService

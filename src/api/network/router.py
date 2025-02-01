@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.auth.utils import get_current_user, get_current_user_soft
+from src.api.auth.utils.auth_utils import get_current_user, get_current_user_soft
 from src.api.network.schemas import PredictIn, PredictOut
 from src.api.network.service import NetworkService
 from src.api.user.schemas import UserOutDto

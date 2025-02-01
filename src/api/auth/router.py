@@ -1,14 +1,10 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
-from starlette import status
-
-from src.api.auth.exceptions import CredentialsException
 from src.api.auth.schemas import Token
 from src.api.auth.service import AuthService
-from src.api.auth.utils import authenticate_user, create_access_token
 from src.api.user.schemas import UserOutDto, UserAuthDto, UserRegistrationDto
 from src.database.config import get_session
 

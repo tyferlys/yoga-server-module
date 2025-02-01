@@ -2,8 +2,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.api.auth.exceptions import LoginExistsException
 from src.api.auth.schemas import Token
-from src.api.auth.utils import authenticate_user, create_access_token, get_password_hash, \
-    generate_verification_token_mail, send_verification_email, verify_token_mail
+from src.api.auth.utils.auth_utils import authenticate_user, create_access_token, get_password_hash
+from src.api.auth.utils.mail_utils import generate_verification_token_mail, send_verification_email, verify_token_mail
 from src.api.user.schemas import UserOutDto, UserRegistrationDto
 from src.api.user.service import UserService
 

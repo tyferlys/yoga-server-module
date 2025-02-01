@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.auth.utils import get_current_user, get_current_admin
+from src.api.auth.utils.auth_utils import get_current_user, get_current_admin
 from src.api.user.schemas import UserOutDto
 from src.api.user.service import UserService
 from src.database.config import get_session
