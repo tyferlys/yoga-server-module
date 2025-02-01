@@ -53,7 +53,8 @@ class PaginationResultPredictionOutDto(BaseModel):
 
 
 class ResultPredictionPutDto(BaseModel):
-    is_right: Optional[bool]
+    is_right_top1: Optional[int]
+    is_right_top5: Optional[int]
     right_answer_system: Optional[int]
     right_answer_sanskrit: Optional[str]
     right_transliteration: Optional[str]

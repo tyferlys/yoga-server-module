@@ -14,9 +14,15 @@ class Settings(BaseSettings):
     DB_PORT: str
 
     HOST_SERVER: str
-    HOST_NETWORK_SERVER: str
     PORT_SERVER: str
     SECRET_KEY: str
+
+    HOST_NETWORK_SERVER: str
+
+    SMTP_SERVER: str
+    SMTP_PORT: str
+    SMTP_USER: str
+    SMTP_PASSWORD: str
 
     def __init__(self, **values: Any):
         super().__init__(**values)

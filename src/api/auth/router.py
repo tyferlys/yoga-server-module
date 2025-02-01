@@ -33,6 +33,14 @@ async def auth(
     return await auth_service.auth_user(user_data.login, user_data.password, session)
 
 
+@router.get("/verify/{token}")
+async def verify_mail(
+    token: str,
+    auth_service: AuthService = Depends(AuthService),
+    session: AsyncSession = Depends(get_session)
+) -> UserOutDto:
+    return await auth_service.verify_token(token, session)
+
 @router.post("/registration")
 async def registration(
     user_data: UserRegistrationDto,

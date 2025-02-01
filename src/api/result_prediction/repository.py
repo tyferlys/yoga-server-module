@@ -68,7 +68,8 @@ class ResultPredictionRepository:
     async def put_result_prediction(self, id_result_prediction: int, result_prediction_data: ResultPredictionPutDto, session: AsyncSession):
         await session.execute(
             update(ResultPrediction).where(ResultPrediction.id == id_result_prediction).values(
-                is_right=result_prediction_data.is_right,
+                is_right_top1=result_prediction_data.is_right_top1,
+                is_right_top5=result_prediction_data.is_right_top5,
                 right_answer_system=result_prediction_data.right_answer_system,
                 right_answer_sanskrit=result_prediction_data.right_answer_sanskrit,
                 right_transliteration=result_prediction_data.right_transliteration,

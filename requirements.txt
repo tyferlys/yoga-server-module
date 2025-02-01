@@ -12,3 +12,4 @@ bcrypt
 pyjwt
 python-multipart
 aiohttp
+itsdangerous

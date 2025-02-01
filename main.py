@@ -1,3 +1,6 @@
+import asyncio
+from contextlib import asynccontextmanager
+
 import uvicorn
 from fastapi import FastAPI, Depends
 from fastapi.security import OAuth2PasswordBearer
@@ -9,10 +12,20 @@ from src.api.user.router import router as router_user
 from src.api.yoga_pose.router import router as router_yoga_pose
 from src.api.network.router import router as router_network
 from src.api.result_prediction.router import router as router_result_prediction
+from alembic import command
+from alembic.config import Config
 
 settings = get_settings()
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    process = await asyncio.create_subprocess_exec("alembic", "upgrade", "head")
+    await process.communicate()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

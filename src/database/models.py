@@ -11,9 +11,12 @@ class User(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     login: Mapped[str] = mapped_column(String(256), unique=True)
+    mail: Mapped[str] = mapped_column(String(256), unique=True)
     password: Mapped[str] = mapped_column(String(256))
     is_admin: Mapped[bool] = mapped_column(Boolean)
     permission_study: Mapped[bool] = mapped_column(Boolean)
+
+    is_verify: Mapped[bool] = mapped_column(Boolean)
 
 
 class YogaPose(Base):
@@ -34,7 +37,8 @@ class ResultPrediction(Base):
     answer: Mapped[str] = mapped_column(String(256))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=False))
 
-    is_right: Mapped[bool] = mapped_column(Boolean(), nullable=True)
+    is_right_top1: Mapped[int] = mapped_column(BigInteger(), ForeignKey("t_yoga_poses.id"), nullable=True)
+    is_right_top5: Mapped[int] = mapped_column(BigInteger(), ForeignKey("t_yoga_poses.id"), nullable=True)
     right_answer_system: Mapped[int] = mapped_column(BigInteger(), ForeignKey("t_yoga_poses.id"), nullable=True)
     right_answer_sanskrit: Mapped[str] = mapped_column(String(256), nullable=True)
     right_transliteration: Mapped[str] = mapped_column(String(256), nullable=True)

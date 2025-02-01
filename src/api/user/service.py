@@ -21,4 +21,7 @@ class UserService:
         user: User = await self.user_repository.patch_permission_study_by_id(user.id, permission, session)
         return UserOutDto.from_user(user)
 
+    async def verify_user(self, mail: str, session: AsyncSession):
+        user: User = await self.user_repository.verify_user(mail, session)
+        return UserOutDto.from_user(user)
 

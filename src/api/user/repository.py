@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.api.user.schemas import UserRegistrationDto
@@ -8,28 +8,40 @@ from src.database.models import User
 class UserRepository:
     async def get_user_by_login(self, login: str, session: AsyncSession) -> User | None:
         user = await session.execute(
-            select(User).where(User.login == login)
+            select(User).where(and_(User.login == login, User.is_verify == True))
         )
         return user.scalar_one_or_none()
 
     async def create_user(self, user_data: UserRegistrationDto, session: AsyncSession) -> User:
         user: User = User(
             login=user_data.login,
+            mail=user_data.mail,
             password=user_data.password,
             is_admin=False,
-            permission_study=False
+            permission_study=False,
+            is_verify=False
         )
         session.add(user)
         await session.commit()
         await session.flush()
         return user
 
-    async def patch_permission_study_by_id(self, id: int, permission: bool, session: AsyncSession) -> User:
+    async def patch_permission_study_by_id(self, user_id: int, permission: bool, session: AsyncSession) -> User:
         user = await session.execute(
-            select(User).where(User.id == id)
+            select(User).where(User.id == user_id)
         )
         user = user.scalar_one_or_none()
         user.permission_study = permission
+        await session.commit()
+        await session.flush()
+        return user
+
+    async def verify_user(self, mail: str, session: AsyncSession):
+        user = await session.execute(
+            select(User).where(User.mail == mail)
+        )
+        user = user.scalar_one_or_none()
+        user.is_verify = True
         await session.commit()
         await session.flush()
         return user
