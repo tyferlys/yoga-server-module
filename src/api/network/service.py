@@ -22,8 +22,12 @@ class NetworkService:
             poses.append(await self.yoga_pose_service.get_yoga_pose_by_id(id_pose, session))
 
         if user is not None and user.permission_study:
-            await self.result_prediction_service.create_result_prediction(prediction_date, id_poses, user, session)
+            result_prediction = await self.result_prediction_service.create_result_prediction(prediction_date, id_poses, user, session)
+            return PredictOut(result_prediction_id=result_prediction.id, yoga_poses=poses)
+        elif user is not None and not user.permission_study:
+            return PredictOut(result_prediction_id=None, yoga_poses=poses)
         elif cookie_permission == "true":
-            await self.result_prediction_service.create_result_prediction(prediction_date, id_poses, None, session)
+            result_prediction = await self.result_prediction_service.create_result_prediction(prediction_date, id_poses, None, session)
+            return PredictOut(result_prediction_id=result_prediction.id, yoga_poses=poses)
 
-        return PredictOut(yoga_poses=poses)
+        return PredictOut(result_prediction_id=None, yoga_poses=poses)

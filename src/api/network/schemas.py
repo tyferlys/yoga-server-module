@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 from src.api.yoga_pose.schemas import YogaPoseOutDto
@@ -9,4 +11,5 @@ class PredictIn(BaseModel):
 
 
 class PredictOut(BaseModel):
+    result_prediction_id: Optional[int]
     yoga_poses: list[YogaPoseOutDto]

@@ -14,10 +14,11 @@ router = APIRouter()
 async def get_yoga_poses(
     page: int = 1,
     count: int = 5,
+    text: str = "",
     yoga_pose_service: YogaPoseService = Depends(YogaPoseService),
     session: AsyncSession = Depends(get_session)
 ) -> PaginationYogaPoseOutDto:
-    return await yoga_pose_service.get_yoga_poses(page, count, session)
+    return await yoga_pose_service.get_yoga_poses(page, count, text, session)
 
 
 @router.get("/{id_yoga_pose}")

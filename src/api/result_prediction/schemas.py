@@ -16,11 +16,12 @@ class ResultPredictionOutDto(BaseModel):
     answer: list[YogaPoseOutDto]
     created_at: datetime
 
-    is_right: Optional[bool]
-    right_answer_system: Optional[YogaPoseOutDto]
+    is_right_top1: Optional[int]
+    is_right_top5: Optional[int]
+    right_answer_system: Optional[int]
     right_answer_sanskrit: Optional[str]
     right_transliteration: Optional[str]
-    right_answer_russian:  Optional[str]
+    right_answer_russian: Optional[str]
 
     @staticmethod
     def from_result_prediction(result_prediction: ResultPrediction, answer: list[YogaPoseOutDto]) -> "ResultPredictionOutDto":
@@ -30,8 +31,9 @@ class ResultPredictionOutDto(BaseModel):
             image=result_prediction.image,
             answer=answer,
             created_at=result_prediction.created_at,
-            is_right=result_prediction.is_right,
-            right_answer_system=YogaPoseOutDto.from_yoga_pose(result_prediction.right_answer_system_entity) if result_prediction.right_answer_system_entity is not None else None,
+            is_right_top1=result_prediction.is_right_top1,
+            is_right_top5=result_prediction.is_right_top5,
+            right_answer_system=result_prediction.right_answer_system,
             right_answer_sanskrit=result_prediction.right_answer_sanskrit,
             right_transliteration=result_prediction.right_transliteration,
             right_answer_russian=result_prediction.right_answer_russian

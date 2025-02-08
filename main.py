@@ -12,6 +12,7 @@ from src.api.user.router import router as router_user
 from src.api.yoga_pose.router import router as router_yoga_pose
 from src.api.network.router import router as router_network
 from src.api.result_prediction.router import router as router_result_prediction
+from src.api.report.router import router as router_report
 from alembic import command
 from alembic.config import Config
 
@@ -39,6 +40,7 @@ app.include_router(router_user, prefix="/api/users", tags=["Пользовате
 app.include_router(router_yoga_pose, prefix="/api/yoga_poses", tags=["Позиции йоги"])
 app.include_router(router_network, prefix="/api/network", tags=["Нейронная сеть"])
 app.include_router(router_result_prediction, prefix="/api/result_prediction", tags=["Результат предсказаний"])
+app.include_router(router_report, prefix="/api/reports", tags=["Сообщения об ошибках"])
 
 
 if __name__ == "__main__":

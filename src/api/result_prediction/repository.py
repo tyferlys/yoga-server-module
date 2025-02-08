@@ -17,7 +17,7 @@ class ResultPredictionRepository:
             id_poses: str,
             id_user: int,
             session: AsyncSession
-    ):
+    ) -> ResultPrediction:
         new_result_prediction = ResultPrediction(
             id_user=id_user,
             image=image_base64,
@@ -26,6 +26,8 @@ class ResultPredictionRepository:
         )
         session.add(new_result_prediction)
         await session.commit()
+        await session.flush()
+        return new_result_prediction
 
     async def get_result_predictions(
             self,
@@ -63,6 +65,7 @@ class ResultPredictionRepository:
         result_prediction = (await session.execute(
             select(ResultPrediction).where(ResultPrediction.id == id_result_prediction)
         )).scalar_one_or_none()
+
         return result_prediction
 
     async def put_result_prediction(self, id_result_prediction: int, result_prediction_data: ResultPredictionPutDto, session: AsyncSession):

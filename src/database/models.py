@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import String, Boolean, Integer, ForeignKey, Text, BigInteger, DateTime
+from sqlalchemy import String, Boolean, Integer, ForeignKey, Text, BigInteger, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.database.config import Base
@@ -45,4 +45,12 @@ class ResultPrediction(Base):
     right_answer_russian: Mapped[str] = mapped_column(String(256), nullable=True)
 
     user = relationship("User")
-    right_answer_system_entity = relationship("YogaPose", lazy="joined")
+
+
+class Report(Base):
+    __tablename__ = "t_reports"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    id_user: Mapped[int] = mapped_column(BigInteger(), ForeignKey("t_users.id"), nullable=True)
+    text: Mapped[str] = mapped_column(Text())
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=False), server_default=func.now())

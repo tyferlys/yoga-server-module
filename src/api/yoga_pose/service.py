@@ -9,8 +9,8 @@ class YogaPoseService:
         self.yoga_pose_repository = YogaPoseRepository()
 
 
-    async def get_yoga_poses(self, page: int, count: int, session: AsyncSession) -> PaginationYogaPoseOutDto:
-        yoga_poses, count_pose = await self.yoga_pose_repository.get_yoga_poses(page, count, session)
+    async def get_yoga_poses(self, page: int, count: int, text: str, session: AsyncSession) -> PaginationYogaPoseOutDto:
+        yoga_poses, count_pose = await self.yoga_pose_repository.get_yoga_poses(page, count, text, session)
         return PaginationYogaPoseOutDto.from_data(yoga_poses, count_pose, count, page)
 
     async def get_yoga_pose_by_id(self, id_yoga_pose: int, session: AsyncSession) -> YogaPoseOutDto:

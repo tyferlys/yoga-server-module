@@ -1,6 +1,6 @@
 from typing import Union, Tuple
 
-from sqlalchemy import select, func, update, asc
+from sqlalchemy import select, func, update, asc, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.testing import in_
 
@@ -9,13 +9,29 @@ from src.database.models import YogaPose
 
 
 class YogaPoseRepository:
-    async def get_yoga_poses(self, page: int, count: int, session: AsyncSession) -> Tuple[list[YogaPose], int]:
-        yoga_poses = (await session.execute(
-            select(YogaPose).order_by(asc(YogaPose.id)).offset((page - 1) * count).limit(count)
-        )).scalars().all()
-        count_poses = (await session.execute(
-            select(func.count(YogaPose.id))
-        )).scalar()
+    async def get_yoga_poses(self, page: int, count: int, text: str, session: AsyncSession) -> Tuple[list[YogaPose], int]:
+        if text == "":
+            yoga_poses = (await session.execute(
+                select(YogaPose).order_by(asc(YogaPose.id)).offset((page - 1) * count).limit(count)
+            )).scalars().all()
+            count_poses = (await session.execute(
+                select(func.count(YogaPose.id))
+            )).scalar()
+        else:
+            yoga_poses = (await session.execute(
+                select(YogaPose).where(or_(
+                    YogaPose.title_russian.ilike(f"%{text}%"),
+                    YogaPose.title_sanskrit.ilike(f"%{text}%"),
+                    YogaPose.title_sanskrit.ilike(f"%{text}%")
+                )).order_by(asc(YogaPose.id)).offset((page - 1) * count).limit(count)
+            )).scalars().all()
+            count_poses = (await session.execute(
+                select(func.count(YogaPose.id)).where(or_(
+                    YogaPose.title_russian.ilike(f"%{text}%"),
+                    YogaPose.title_sanskrit.ilike(f"%{text}%"),
+                    YogaPose.title_sanskrit.ilike(f"%{text}%")
+                ))
+            )).scalar()
 
         return list(yoga_poses), count_poses
 

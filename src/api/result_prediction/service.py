@@ -8,6 +8,7 @@ from src.api.result_prediction.schemas import PaginationResultPredictionOutDto, 
     ResultPredictionOutDto
 from src.api.user.schemas import UserOutDto
 from src.api.yoga_pose.service import YogaPoseService
+from src.database.models import ResultPrediction
 
 
 class ResultPredictionService:
@@ -15,10 +16,10 @@ class ResultPredictionService:
         self.yoga_pose_service = YogaPoseService()
         self.result_prediction_repository = ResultPredictionRepository()
 
-    async def create_result_prediction(self, prediction_date: PredictIn, id_poses: list[int], user: UserOutDto | None, session: AsyncSession):
+    async def create_result_prediction(self, prediction_date: PredictIn, id_poses: list[int], user: UserOutDto | None, session: AsyncSession) -> ResultPrediction:
         id_poses_json = json.dumps(id_poses)
         user_id = user.id if user is not None else None
-        await self.result_prediction_repository.create_result_prediction(prediction_date.image, id_poses_json, user_id, session)
+        return await self.result_prediction_repository.create_result_prediction(prediction_date.image, id_poses_json, user_id, session)
 
     async def get_result_prediction(self, id_result_prediction: int, session: AsyncSession) -> ResultPredictionOutDto:
         result_prediction = await self.result_prediction_repository.get_result_prediction_by_id(id_result_prediction, session)

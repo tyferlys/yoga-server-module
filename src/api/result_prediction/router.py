@@ -24,7 +24,7 @@ async def get_result_predictions(
 
 @router.get("/{id_result_prediction}")
 async def get_result_prediction(
-    id_result_prediction: int,
+    id_result_prediction: int = -1,
     result_prediction_service: ResultPredictionService = Depends(ResultPredictionService),
     session: AsyncSession = Depends(get_session),
     user: UserOutDto = Depends(get_current_user)
