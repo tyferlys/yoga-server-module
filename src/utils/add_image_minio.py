@@ -34,7 +34,7 @@ async def add_image_minio(image_base64: str) -> str:
         len(image_data)
     )
 
-    image_url = f"http://213.108.251.81:{settings.PORT_MINIO}/{bucket_name}/{object_name}"
+    image_url = f"http://213.108.251.81:8002/{bucket_name}/{object_name}"
     print(image_url)
     return image_url
 
