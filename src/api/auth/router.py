@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Response
@@ -35,7 +36,7 @@ async def auth(
         httponly=False,  # Защищает cookie от доступа через JavaScript
         secure=False,  # Если у вас нет HTTPS, установите это в False
         samesite="none",
-        expires=60 * 24 * 3600
+        expires=datetime.utcnow() + timedelta(days=31)
     )
     return result
 
