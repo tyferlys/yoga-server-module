@@ -35,6 +35,7 @@ async def auth(
         httponly=False,  # Защищает cookie от доступа через JavaScript
         secure=False,  # Если у вас нет HTTPS, установите это в False
         samesite="none",
+        expires=60 * 24 * 3600
     )
     return result
 
