@@ -11,7 +11,7 @@ settings = get_settings()
 
 async def add_image_minio(image_base64: str) -> str:
     minio_client = Minio(
-        f"{settings.HOST_MINIO}:{settings.PORT_MINIO}",  # или ваш URL MinIO
+        f"{settings.HOST_MINIO}:{settings.PORT_MINIO}",
         access_key=settings.USER_MINIO,
         secret_key=settings.PASSWORD_MINIO,
         secure=False
@@ -34,7 +34,7 @@ async def add_image_minio(image_base64: str) -> str:
         len(image_data)
     )
 
-    image_url = f"http://{settings.HOST_MINIO}:{settings.PORT_MINIO}/{bucket_name}/{object_name}"
+    image_url = f"http://213.108.251.81:{settings.PORT_MINIO}/{bucket_name}/{object_name}"
     print(image_url)
     return image_url
 
