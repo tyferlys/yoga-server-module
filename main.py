@@ -3,8 +3,8 @@ from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
-from starlette.middleware.cors import CORSMiddleware
 
 from config import get_settings
 from src.api.auth.router import router as router_auth
