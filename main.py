@@ -29,7 +29,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://213.108.251.81:3000"],
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -44,7 +44,7 @@ app.include_router(router_report, prefix="/api/reports", tags=["Сообщени
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=int(settings.PORT_SERVER))
+    uvicorn.run(app, host="127.0.0.1", port=int(settings.PORT_SERVER))
 
 """
     По поводу ограничения к запросам:

@@ -13,14 +13,14 @@ from src.database.models import ResultPrediction
 class ResultPredictionRepository:
     async def create_result_prediction(
             self,
-            image_base64: str,
+            image: str,
             id_poses: str,
             id_user: int,
             session: AsyncSession
     ) -> ResultPrediction:
         new_result_prediction = ResultPrediction(
             id_user=id_user,
-            image=image_base64,
+            image=image,
             answer=id_poses,
             created_at=datetime.datetime.now()
         )

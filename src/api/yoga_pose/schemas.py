@@ -2,7 +2,21 @@ import math
 
 from pydantic import BaseModel
 
-from src.database.models import YogaPose
+from src.database.models import YogaPose, YogaPoseImages
+
+
+class YogaPoseImageOutDto(BaseModel):
+    id: int
+    id_pose: int
+    image: str
+
+    @staticmethod
+    def from_yoga_pose_image(yoga_pose_image: YogaPoseImages) -> "YogaPoseImageOutDto":
+        return YogaPoseImageOutDto(
+            id = yoga_pose_image.id,
+            id_pose = yoga_pose_image.id_pose,
+            image = yoga_pose_image.image
+        )
 
 
 class YogaPoseOutDto(BaseModel):
@@ -11,6 +25,8 @@ class YogaPoseOutDto(BaseModel):
     title_transliteration: str
     title_russian: str
 
+    images: list[YogaPoseImageOutDto]
+
     @staticmethod
     def from_yoga_pose(yoga_pose: YogaPose) -> "YogaPoseOutDto":
         return YogaPoseOutDto(
@@ -18,6 +34,7 @@ class YogaPoseOutDto(BaseModel):
             title_sanskrit=yoga_pose.title_sanskrit,
             title_transliteration=yoga_pose.title_transliteration,
             title_russian=yoga_pose.title_russian,
+            images=[YogaPoseImageOutDto.from_yoga_pose_image(item) for item in yoga_pose.images]
         )
 
 
@@ -39,3 +56,7 @@ class YogaPosePutDto(BaseModel):
     title_sanskrit: str
     title_transliteration: str
     title_russian: str
+
+
+class YogaPosePatchImagesDto(BaseModel):
+    images: list[str]

@@ -27,6 +27,16 @@ class YogaPose(Base):
     title_transliteration: Mapped[str] = mapped_column(String(256))
     title_russian: Mapped[str] = mapped_column(String(256))
 
+    images: Mapped[list["YogaPoseImages"]] = relationship("YogaPoseImages", lazy="selectin")
+
+
+class YogaPoseImages(Base):
+    __tablename__ = "t_yoga_poses_images"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    id_pose: Mapped[int] = mapped_column(BigInteger(), ForeignKey("t_yoga_poses.id"), nullable=False)
+    image: Mapped[str] = mapped_column(Text())
+
 
 class ResultPrediction(Base):
     __tablename__ = "t_result_predictions"

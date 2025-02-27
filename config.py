@@ -24,6 +24,12 @@ class Settings(BaseSettings):
     SMTP_USER: str
     SMTP_PASSWORD: str
 
+    HOST_MINIO: str
+    PORT_MINIO: str
+    USER_MINIO: str
+    PASSWORD_MINIO: str
+    NAME_BUCKET_IMAGES_MINIO: str
+
     def __init__(self, **values: Any):
         super().__init__(**values)
         for attribute, value in self.__dict__.items():

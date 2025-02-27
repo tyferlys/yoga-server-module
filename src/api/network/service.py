@@ -8,6 +8,7 @@ from src.api.network.utils import send_request_to_network
 from src.api.result_prediction.service import ResultPredictionService
 from src.api.user.schemas import UserOutDto
 from src.api.yoga_pose.service import YogaPoseService
+from src.utils.add_image_minio import add_image_minio
 
 
 class NetworkService:
@@ -20,6 +21,8 @@ class NetworkService:
         poses = []
         for id_pose in id_poses:
             poses.append(await self.yoga_pose_service.get_yoga_pose_by_id(id_pose, session))
+
+        prediction_date.image = await add_image_minio(prediction_date.image)
 
         if user is not None and user.permission_study:
             result_prediction = await self.result_prediction_service.create_result_prediction(prediction_date, id_poses, user, session)
