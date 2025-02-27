@@ -44,7 +44,7 @@ app.include_router(router_report, prefix="/api/reports", tags=["Сообщени
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=int(settings.PORT_SERVER))
+    uvicorn.run(app, host="0.0.0.0", port=int(settings.PORT_SERVER))
 
 """
     По поводу ограничения к запросам:

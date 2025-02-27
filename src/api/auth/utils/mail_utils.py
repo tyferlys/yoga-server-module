@@ -8,7 +8,7 @@ settings = get_settings()
 serializer = URLSafeTimedSerializer(settings.SECRET_KEY)
 
 def send_verification_email(mail: str, token: str):
-    text = f"Для подтверждения регистрации перейдите по ссылке: http://{settings.HOST_SERVER}:{settings.PORT_SERVER}/api/auth/verify/{token}"
+    text = f"Для подтверждения регистрации перейдите по ссылке: http://213.108.251.81:{settings.PORT_SERVER}/api/auth/verify/{token}"
     message = """\
     From: %s
     To: %s
