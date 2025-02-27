@@ -36,7 +36,7 @@ async def auth(
         httponly=False,  # Защищает cookie от доступа через JavaScript
         secure=False,  # Если у вас нет HTTPS, установите это в False
         samesite="none",
-        expires=datetime.utcnow() + timedelta(days=31)
+        expires=datetime.now() + timedelta(days=31)
     )
     return result
 
