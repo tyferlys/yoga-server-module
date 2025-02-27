@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Response
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.api.auth.schemas import Token
@@ -23,10 +23,20 @@ async def login_for_access_token(
 @router.post("")
 async def auth(
     user_data: UserAuthDto,
+    response: Response,
     auth_service: AuthService = Depends(AuthService),
     session: AsyncSession = Depends(get_session)
 ) -> Token:
-    return await auth_service.auth_user(user_data.login, user_data.password, session)
+
+    result = await auth_service.auth_user(user_data.login, user_data.password, session)
+    response.set_cookie(
+        key="access_token",
+        value=result.access_token,
+        httponly=False,  # Защищает cookie от доступа через JavaScript
+        secure=False,  # Если у вас нет HTTPS, установите это в False
+        samesite="none",
+    )
+    return result
 
 
 @router.get("/verify/{token}")
