@@ -11,7 +11,7 @@ from src.database.models import ResultPrediction
 
 class ResultPredictionOutDto(BaseModel):
     id: int
-    id_user: int
+    id_user: Optional[int]
     image: str
     answer: list[YogaPoseOutDto]
     created_at: datetime
