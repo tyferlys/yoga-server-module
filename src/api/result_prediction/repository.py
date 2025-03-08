@@ -35,9 +35,10 @@ class ResultPredictionRepository:
             page: int,
             count: int,
             session: AsyncSession,
+            only_user_predictions: bool,
             id_user: int | None
     ) -> Tuple[list[ResultPrediction], int]:
-        if id_user is not None:
+        if id_user is not None and not only_user_predictions:
             result_predictions = (await session.execute(
                 select(ResultPrediction, func.count().over().label("count")).options(selectinload(ResultPrediction.user))
                 .where(ResultPrediction.id_user == id_user)

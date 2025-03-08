@@ -32,11 +32,11 @@ class ResultPredictionService:
 
         return ResultPredictionOutDto.from_result_prediction(result_prediction, answer_poses_filtered)
 
-    async def get_result_predictions(self, page: int, count: int, session: AsyncSession, user: UserOutDto) -> PaginationResultPredictionOutDto:
+    async def get_result_predictions(self, page: int, count: int, only_user_predictions: bool, session: AsyncSession, user: UserOutDto) -> PaginationResultPredictionOutDto:
         if user.is_admin:
-            result_predictions, count_predictions = await self.result_prediction_repository.get_result_predictions(page, count, session, None)
+            result_predictions, count_predictions = await self.result_prediction_repository.get_result_predictions(page, count, session, only_user_predictions, None)
         else:
-            result_predictions, count_predictions = await self.result_prediction_repository.get_result_predictions(page, count, session, user.id)
+            result_predictions, count_predictions = await self.result_prediction_repository.get_result_predictions(page, count, session, True, user.id)
 
         result_predictions_all_data = []
         for result_prediction in result_predictions:

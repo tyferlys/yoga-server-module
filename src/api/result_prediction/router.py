@@ -15,11 +15,12 @@ router = APIRouter()
 async def get_result_predictions(
     page: int = 1,
     count: int = 5,
+    only_user_predictions: bool = True,
     result_prediction_service: ResultPredictionService = Depends(ResultPredictionService),
     session: AsyncSession = Depends(get_session),
     user: UserOutDto = Depends(get_current_user)
 ) -> PaginationResultPredictionOutDto:
-    return await result_prediction_service.get_result_predictions(page, count, session, user)
+    return await result_prediction_service.get_result_predictions(page, count, only_user_predictions, session, user)
 
 
 @router.get("/{id_result_prediction}")
