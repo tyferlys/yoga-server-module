@@ -54,7 +54,7 @@ class ResultPrediction(Base):
     right_transliteration: Mapped[str] = mapped_column(String(256), nullable=True)
     right_answer_russian: Mapped[str] = mapped_column(String(256), nullable=True)
 
-    user = relationship("User")
+    user = relationship("User", lazy="selectin")
 
 
 class Report(Base):

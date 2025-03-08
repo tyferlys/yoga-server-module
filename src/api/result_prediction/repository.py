@@ -3,6 +3,7 @@ from typing import Tuple
 
 from sqlalchemy import select, desc, func, update
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from src.api.network.schemas import PredictIn
 from src.api.result_prediction.schemas import ResultPredictionPutDto
@@ -38,7 +39,7 @@ class ResultPredictionRepository:
     ) -> Tuple[list[ResultPrediction], int]:
         if id_user is not None:
             result_predictions = (await session.execute(
-                select(ResultPrediction, func.count().over().label("count"))
+                select(ResultPrediction, func.count().over().label("count")).options(selectinload(ResultPrediction.user))
                 .where(ResultPrediction.id_user == id_user)
                 .order_by(desc(ResultPrediction.created_at))
                 .offset((page - 1) * count).limit(count)
@@ -51,7 +52,7 @@ class ResultPredictionRepository:
             return list(result_predictions), count_predictions
         else:
             result_predictions = (await session.execute(
-                select(ResultPrediction)
+                select(ResultPrediction).options(selectinload(ResultPrediction.user))
                 .order_by(desc(ResultPrediction.created_at))
                 .offset((page - 1) * count).limit(count)
             )).scalars().all()
@@ -63,7 +64,7 @@ class ResultPredictionRepository:
 
     async def get_result_prediction_by_id(self, id_result_prediction: int, session: AsyncSession) -> ResultPrediction:
         result_prediction = (await session.execute(
-            select(ResultPrediction).where(ResultPrediction.id == id_result_prediction)
+            select(ResultPrediction).options(selectinload(ResultPrediction.user)).where(ResultPrediction.id == id_result_prediction)
         )).scalar_one_or_none()
 
         return result_prediction

@@ -5,13 +5,14 @@ from typing import Optional, Tuple
 
 from pydantic import BaseModel
 
+from src.api.user.schemas import UserOutDto
 from src.api.yoga_pose.schemas import YogaPoseOutDto
 from src.database.models import ResultPrediction
 
 
 class ResultPredictionOutDto(BaseModel):
     id: int
-    id_user: Optional[int]
+    user: Optional[UserOutDto]
     image: str
     answer: list[YogaPoseOutDto]
     created_at: datetime
@@ -27,7 +28,7 @@ class ResultPredictionOutDto(BaseModel):
     def from_result_prediction(result_prediction: ResultPrediction, answer: list[YogaPoseOutDto]) -> "ResultPredictionOutDto":
         return ResultPredictionOutDto(
             id=result_prediction.id,
-            id_user=result_prediction.id_user,
+            user=UserOutDto.from_user(result_prediction.user),
             image=result_prediction.image,
             answer=answer,
             created_at=result_prediction.created_at,
