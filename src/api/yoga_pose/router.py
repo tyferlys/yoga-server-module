@@ -52,7 +52,7 @@ async def patch_images_yoga_pose_by_id(
     return await yoga_pose_service.patch_images_pose_by_id(id_yoga_pose, images_data, session)
 
 
-@router.patch("/{id_yoga_pose}/images")
+@router.delete("/{id_yoga_pose}/images")
 async def delete_images_yoga_pose_by_id(
     id_yoga_pose: int,
     image_id: int,
