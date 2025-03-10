@@ -68,6 +68,6 @@ class YogaPoseRepository:
         await session.commit()
 
     async def delete_image_pose_by_id(self, id_yoga_pose: int, image_id: int, session: AsyncSession):
-        query = delete(YogaPoseImages).where(YogaPose.id == image_id)
+        query = delete(YogaPoseImages).where(YogaPoseImages.id == image_id)
         await session.execute(query)
         await session.commit()
