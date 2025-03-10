@@ -41,7 +41,7 @@ async def put_yoga_pose_by_id(
     return await yoga_pose_service.put_yoga_pose_by_id(id_yoga_pose, yoga_pose_data, session)
 
 
-@router.patch("/{id_yoga_pose}")
+@router.patch("/{id_yoga_pose}/images")
 async def patch_images_yoga_pose_by_id(
     id_yoga_pose: int,
     images_data: YogaPosePatchImagesDto,
@@ -50,3 +50,14 @@ async def patch_images_yoga_pose_by_id(
     user: UserOutDto = Depends(get_current_admin)
 ):
     return await yoga_pose_service.patch_images_pose_by_id(id_yoga_pose, images_data, session)
+
+
+@router.patch("/{id_yoga_pose}/images")
+async def delete_images_yoga_pose_by_id(
+    id_yoga_pose: int,
+    image_id: int,
+    yoga_pose_service: YogaPoseService = Depends(YogaPoseService),
+    session: AsyncSession = Depends(get_session),
+    user: UserOutDto = Depends(get_current_admin)
+):
+    return await yoga_pose_service.delete_images_pose_by_id(id_yoga_pose, image_id, session)

@@ -32,3 +32,8 @@ class YogaPoseService:
             yoga_pose = await self.yoga_pose_repository.patch_image_pose_by_id(id_yoga_pose, image, session)
 
         return await self.get_yoga_pose_by_id(id_yoga_pose, session)
+
+    async def delete_images_pose_by_id(self, id_yoga_pose: int, image_id: int, session: AsyncSession) -> YogaPoseOutDto:
+        yoga_pose = await self.yoga_pose_repository.delete_image_pose_by_id(id_yoga_pose, image_id, session)
+
+        return await self.get_yoga_pose_by_id(id_yoga_pose, session)

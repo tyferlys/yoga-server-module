@@ -1,6 +1,6 @@
 from typing import Union, Tuple
 
-from sqlalchemy import select, func, update, asc, or_
+from sqlalchemy import select, func, update, asc, or_, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from sqlalchemy.testing import in_
@@ -65,4 +65,9 @@ class YogaPoseRepository:
             image=image
         )
         session.add(yoga_pose_image)
+        await session.commit()
+
+    async def delete_image_pose_by_id(self, id_yoga_pose: int, image_id: int, session: AsyncSession):
+        query = delete(YogaPoseImages).where(YogaPose.id == image_id)
+        await session.execute(query)
         await session.commit()
