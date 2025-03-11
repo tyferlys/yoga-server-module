@@ -24,6 +24,7 @@ class YogaPoseOutDto(BaseModel):
     title_sanskrit: str
     title_transliteration: str
     title_russian: str
+    title_russian_interpretation: str
 
     images: list[YogaPoseImageOutDto]
 
@@ -34,6 +35,7 @@ class YogaPoseOutDto(BaseModel):
             title_sanskrit=yoga_pose.title_sanskrit,
             title_transliteration=yoga_pose.title_transliteration,
             title_russian=yoga_pose.title_russian,
+            title_russian_interpretation=yoga_pose.title_russian_interpretation,
             images=[YogaPoseImageOutDto.from_yoga_pose_image(item) for item in yoga_pose.images]
         )
 
@@ -56,6 +58,7 @@ class YogaPosePutDto(BaseModel):
     title_sanskrit: str
     title_transliteration: str
     title_russian: str
+    title_russian_interpretation: str
 
 
 class YogaPosePatchImagesDto(BaseModel):

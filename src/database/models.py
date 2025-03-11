@@ -26,6 +26,7 @@ class YogaPose(Base):
     title_sanskrit: Mapped[str] = mapped_column(String(256))
     title_transliteration: Mapped[str] = mapped_column(String(256))
     title_russian: Mapped[str] = mapped_column(String(256))
+    title_russian_interpretation: Mapped[str] = mapped_column(String(256), nullable=True)
 
     images: Mapped[list["YogaPoseImages"]] = relationship("YogaPoseImages", lazy="selectin")
 
