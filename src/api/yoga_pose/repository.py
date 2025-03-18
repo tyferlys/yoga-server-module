@@ -53,7 +53,8 @@ class YogaPoseRepository:
             update(YogaPose).where(YogaPose.id == id_yoga_pose).values(
                 title_sanskrit=yoga_pose_data.title_sanskrit,
                 title_transliteration=yoga_pose_data.title_transliteration,
-                title_russian=yoga_pose_data.title_russian
+                title_russian=yoga_pose_data.title_russian,
+                title_russian_interpretation=yoga_pose_data.title_russian_interpretation
             )
         )
         await session.commit()
