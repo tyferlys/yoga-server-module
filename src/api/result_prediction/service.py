@@ -34,7 +34,7 @@ class ResultPredictionService:
 
     async def get_result_predictions(self, page: int, count: int, only_user_predictions: bool, session: AsyncSession, user: UserOutDto) -> PaginationResultPredictionOutDto:
         if user.is_admin:
-            result_predictions, count_predictions = await self.result_prediction_repository.get_result_predictions(page, count, session, only_user_predictions, None)
+            result_predictions, count_predictions = await self.result_prediction_repository.get_result_predictions(page, count, session, only_user_predictions, user.id)
         else:
             result_predictions, count_predictions = await self.result_prediction_repository.get_result_predictions(page, count, session, True, user.id)
 
