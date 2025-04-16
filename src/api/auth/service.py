@@ -1,9 +1,10 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.auth.exceptions import LoginExistsException
-from src.api.auth.schemas import Token
+from src.api.auth.exceptions import LoginExistsException, CredentialsException
+from src.api.auth.schemas import Token, ResetPasswordDto
 from src.api.auth.utils.auth_utils import authenticate_user, create_access_token, get_password_hash
-from src.api.auth.utils.mail_utils import generate_verification_token_mail, send_verification_email, verify_token_mail
+from src.api.auth.utils.mail_utils import generate_verification_token_mail, send_verification_email, verify_token_mail, \
+    send_reset_password_request
 from src.api.user.schemas import UserOutDto, UserRegistrationDto
 from src.api.user.service import UserService
 
@@ -31,6 +32,19 @@ class AuthService:
 
         return user_created
 
-    async def verify_token(self, token: str, session) -> UserOutDto:
+    async def verify_token(self, token: str, session: AsyncSession) -> UserOutDto:
         mail = verify_token_mail(token)
         return await self.user_service.verify_user(mail, session)
+
+    async def reset_password_request(self, login: str, session: AsyncSession) -> None:
+        user: UserOutDto = await self.user_service.get_user_by_login(login, session)
+        if user is None:
+            raise CredentialsException()
+
+        token = generate_verification_token_mail(user.mail)
+        send_reset_password_request(user.mail, token)
+
+    async def reset_password(self, reset_password_data: ResetPasswordDto, session: AsyncSession) -> UserOutDto:
+        mail = verify_token_mail(reset_password_data.token)
+        password = get_password_hash(reset_password_data.password)
+        return await self.user_service.patch_password(mail, password, session)

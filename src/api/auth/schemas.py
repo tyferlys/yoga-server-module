@@ -14,3 +14,8 @@ class NonExceptionOAuth2PasswordBearer(OAuth2PasswordBearer):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+
+class ResetPasswordDto(BaseModel):
+    password: str
+    token: str

@@ -1,5 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.api.auth.schemas import ResetPasswordDto
 from src.api.user.repository import UserRepository
 from src.api.user.schemas import UserOutDto, UserRegistrationDto
 from src.database.models import User
@@ -21,7 +22,10 @@ class UserService:
         user: User = await self.user_repository.patch_permission_study_by_id(user.id, permission, session)
         return UserOutDto.from_user(user)
 
-    async def verify_user(self, mail: str, session: AsyncSession):
+    async def verify_user(self, mail: str, session: AsyncSession) -> UserOutDto:
         user: User = await self.user_repository.verify_user(mail, session)
         return UserOutDto.from_user(user)
 
+    async def patch_password(self, mail: str, password: str, session: AsyncSession) -> UserOutDto:
+        user: User = await self.user_repository.patch_password(mail, password, session)
+        return UserOutDto.from_user(user)

@@ -1,6 +1,7 @@
 from sqlalchemy import select, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.api.auth.schemas import ResetPasswordDto
 from src.api.user.schemas import UserRegistrationDto
 from src.database.models import User
 
@@ -36,12 +37,22 @@ class UserRepository:
         await session.flush()
         return user
 
-    async def verify_user(self, mail: str, session: AsyncSession):
+    async def verify_user(self, mail: str, session: AsyncSession) -> User:
         user = await session.execute(
             select(User).where(User.mail == mail)
         )
         user = user.scalar_one_or_none()
         user.is_verify = True
+        await session.commit()
+        await session.flush()
+        return user
+
+    async def patch_password(self, mail: str, password: str, session: AsyncSession) -> User:
+        user = await session.execute(
+            select(User).where(User.mail == mail)
+        )
+        user = user.scalar_one_or_none()
+        user.password = password
         await session.commit()
         await session.flush()
         return user
