@@ -33,7 +33,7 @@ def send_verification_email(mail: str, token: str):
     server.quit()
 
 def send_reset_password_request(mail: str, token: str):
-    text = f"Для восстановления пароля перейдите по ссылке: http://213.108.251.81:3000/api/auth/reset_password/{token}"
+    text = f"Для восстановления пароля перейдите по ссылке: http://213.108.251.81:3000/auth/reset_password/{token}"
     message = """\
     From: %s
     To: %s
