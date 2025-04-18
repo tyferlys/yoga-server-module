@@ -17,7 +17,7 @@ def verify_token_mail(token: str) -> str | None:
         return None
 
 def send_verification_email(mail: str, token: str):
-    text = f"Для подтверждения регистрации перейдите по ссылке: http://213.108.251.81:{settings.PORT_SERVER}/api/auth/verify/{token}"
+    text = f"Для подтверждения регистрации перейдите по ссылке: http://147.45.141.253:{settings.PORT_SERVER}/api/auth/verify/{token}"
     message = """\
     From: %s
     To: %s
@@ -33,7 +33,7 @@ def send_verification_email(mail: str, token: str):
     server.quit()
 
 def send_reset_password_request(mail: str, token: str):
-    text = f"Для восстановления пароля перейдите по ссылке: http://213.108.251.81:3000/auth/reset-password/{token}"
+    text = f"Для восстановления пароля перейдите по ссылке: http://yoga-project-network.ru/auth/reset-password/{token}"
     message = """\
     From: %s
     To: %s
