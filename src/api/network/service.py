@@ -16,7 +16,7 @@ class NetworkService:
         self.yoga_pose_service = YogaPoseService()
         self.result_prediction_service = ResultPredictionService()
 
-    async def prediction(self, prediction_date: PredictIn, user: UserOutDto, cookie_permission: str, session: AsyncSession) -> PredictOut:
+    async def prediction(self, prediction_date: PredictIn, user: UserOutDto, permission_study: bool, session: AsyncSession) -> PredictOut:
         id_poses = await send_request_to_network(prediction_date)
         poses = []
         for id_pose in id_poses:
@@ -29,7 +29,7 @@ class NetworkService:
             return PredictOut(result_prediction_id=result_prediction.id, yoga_poses=poses)
         elif user is not None and not user.permission_study:
             return PredictOut(result_prediction_id=None, yoga_poses=poses)
-        elif cookie_permission == "true":
+        elif permission_study:
             result_prediction = await self.result_prediction_service.create_result_prediction(prediction_date, id_poses, None, session)
             return PredictOut(result_prediction_id=result_prediction.id, yoga_poses=poses)
 

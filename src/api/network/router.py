@@ -18,5 +18,5 @@ async def prediction(
     session: AsyncSession = Depends(get_session),
     user: UserOutDto = Depends(get_current_user_soft)
 ) -> PredictOut:
-    cookie_permission = request.cookies.get("permission_study")
-    return await network_service.prediction(prediction_date, user, cookie_permission, session)
+    permission = prediction_date.permission_study if prediction_date.permission_study is not None else False
+    return await network_service.prediction(prediction_date, user, permission, session)

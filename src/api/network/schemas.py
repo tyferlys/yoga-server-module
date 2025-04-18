@@ -8,6 +8,7 @@ from src.database.models import YogaPose
 
 class PredictIn(BaseModel):
     image: str
+    permission_study: Optional[bool]
 
 
 class PredictOut(BaseModel):
