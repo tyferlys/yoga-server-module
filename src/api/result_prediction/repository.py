@@ -3,7 +3,7 @@ from typing import Tuple
 
 from sqlalchemy import select, desc, func, update
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, joinedload
 
 from src.api.network.schemas import PredictIn
 from src.api.result_prediction.schemas import ResultPredictionPutDto
@@ -53,7 +53,7 @@ class ResultPredictionRepository:
             return list(result_predictions), count_predictions
         else:
             result_predictions = (await session.execute(
-                select(ResultPrediction).options(selectinload(ResultPrediction.user, innerjoin=False))
+                select(ResultPrediction).options(joinedload(ResultPrediction.user, innerjoin=False))
                 .order_by(desc(ResultPrediction.created_at))
                 .offset((page - 1) * count).limit(count)
             )).scalars().all()
