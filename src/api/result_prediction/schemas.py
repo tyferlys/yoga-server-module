@@ -23,6 +23,7 @@ class ResultPredictionOutDto(BaseModel):
     right_answer_sanskrit: Optional[str]
     right_transliteration: Optional[str]
     right_answer_russian: Optional[str]
+    right_answer_russian_interpretation: Optional[str]
 
     @staticmethod
     def from_result_prediction(result_prediction: ResultPrediction, answer: list[YogaPoseOutDto]) -> "ResultPredictionOutDto":
@@ -37,7 +38,8 @@ class ResultPredictionOutDto(BaseModel):
             right_answer_system=result_prediction.right_answer_system,
             right_answer_sanskrit=result_prediction.right_answer_sanskrit,
             right_transliteration=result_prediction.right_transliteration,
-            right_answer_russian=result_prediction.right_answer_russian
+            right_answer_russian=result_prediction.right_answer_russian,
+            right_answer_russian_interpretation=result_prediction.right_answer_russian_interpretation
         )
 
 
@@ -62,3 +64,4 @@ class ResultPredictionPutDto(BaseModel):
     right_answer_sanskrit: Optional[str]
     right_transliteration: Optional[str]
     right_answer_russian: Optional[str]
+    right_answer_russian_interpretation: Optional[str]

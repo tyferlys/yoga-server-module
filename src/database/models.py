@@ -54,6 +54,7 @@ class ResultPrediction(Base):
     right_answer_sanskrit: Mapped[str] = mapped_column(String(256), nullable=True)
     right_transliteration: Mapped[str] = mapped_column(String(256), nullable=True)
     right_answer_russian: Mapped[str] = mapped_column(String(256), nullable=True)
+    right_answer_russian_interpretation: Mapped[str] = mapped_column(String(256), nullable=True)
 
     user = relationship("User", lazy="selectin")
 

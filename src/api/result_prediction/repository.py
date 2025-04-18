@@ -78,7 +78,8 @@ class ResultPredictionRepository:
                 right_answer_system=result_prediction_data.right_answer_system,
                 right_answer_sanskrit=result_prediction_data.right_answer_sanskrit,
                 right_transliteration=result_prediction_data.right_transliteration,
-                right_answer_russian=result_prediction_data.right_answer_russian
+                right_answer_russian=result_prediction_data.right_answer_russian,
+                right_answer_russian_interpretation=result_prediction_data.right_answer_russian_interpretation,
             )
         )
         await session.commit()
