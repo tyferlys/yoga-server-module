@@ -1,5 +1,6 @@
 import smtplib
 
+import loguru
 from itsdangerous import URLSafeTimedSerializer
 from config import get_settings
 
@@ -25,7 +26,7 @@ def send_verification_email(mail: str, token: str):
 
     %s
     """ % (settings.SMTP_USER, mail, "Подтверждение регистрации", text)
-
+    loguru.logger.info("Начинаем соединение")
     server = smtplib.SMTP_SSL(settings.SMTP_SERVER, settings.SMTP_PORT)
     server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
     server.set_debuglevel(1)
