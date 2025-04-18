@@ -42,7 +42,7 @@ def send_reset_password_request(mail: str, token: str):
 
     %s
     """ % (settings.SMTP_USER, mail, "Восстановление пароля", text)
-
+    loguru.logger.info("Начинаем соединение")
     server = smtplib.SMTP_SSL(settings.SMTP_SERVER, settings.SMTP_PORT)
     server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
     server.set_debuglevel(1)
