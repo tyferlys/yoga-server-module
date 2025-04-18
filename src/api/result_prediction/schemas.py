@@ -28,7 +28,7 @@ class ResultPredictionOutDto(BaseModel):
     def from_result_prediction(result_prediction: ResultPrediction, answer: list[YogaPoseOutDto]) -> "ResultPredictionOutDto":
         return ResultPredictionOutDto(
             id=result_prediction.id,
-            user=UserOutDto.from_user(result_prediction.user),
+            user=UserOutDto.from_user(result_prediction.user) if result_prediction.user else None,
             image=result_prediction.image,
             answer=answer,
             created_at=result_prediction.created_at,
