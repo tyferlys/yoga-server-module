@@ -53,7 +53,7 @@ class ResultPredictionRepository:
             return list(result_predictions), count_predictions
         else:
             result_predictions = (await session.execute(
-                select(ResultPrediction).options(selectinload(ResultPrediction.user))
+                select(ResultPrediction).options(selectinload(ResultPrediction.user, innerjoin=False))
                 .order_by(desc(ResultPrediction.created_at))
                 .offset((page - 1) * count).limit(count)
             )).scalars().all()
