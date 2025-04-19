@@ -66,3 +66,15 @@ class Report(Base):
     id_user: Mapped[int] = mapped_column(BigInteger(), ForeignKey("t_users.id"), nullable=True)
     text: Mapped[str] = mapped_column(Text())
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=False), server_default=func.now())
+
+
+class RequestToAdminStatus(Base):
+    __tablename__ = "t_request_to_admin_status"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    id_user: Mapped[int] = mapped_column(BigInteger(), ForeignKey("t_users.id"), nullable=True)
+    status: Mapped[str] = mapped_column(String(256), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=False), server_default=func.now())
+
+    user = relationship("User", lazy="selectin")
+

@@ -1,6 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.api.auth.schemas import ResetPasswordDto
+from src.api.request_to_admin_status.schemas import RequestToAdminStatusOutDto
+from src.api.request_to_admin_status.service import RequestToAdminStatusService
 from src.api.user.repository import UserRepository
 from src.api.user.schemas import UserOutDto, UserRegistrationDto
 from src.database.models import User
@@ -9,6 +11,7 @@ from src.database.models import User
 class UserService:
     def __init__(self):
         self.user_repository = UserRepository()
+        self.request_to_admin_status_service = RequestToAdminStatusService()
 
     async def get_user_by_login(self, login: str, session: AsyncSession) -> UserOutDto | None:
         user: User = await self.user_repository.get_user_by_login(login, session)
@@ -33,3 +36,6 @@ class UserService:
     async def patch_password(self, mail: str, password: str, session: AsyncSession) -> UserOutDto:
         user: User = await self.user_repository.patch_password(mail, password, session)
         return UserOutDto.from_user(user)
+
+    async def create_request_to_admin_status(self, user: UserOutDto, session: AsyncSession) -> RequestToAdminStatusOutDto:
+        return await self.request_to_admin_status_service.create_request_to_admin_status(user, session)
