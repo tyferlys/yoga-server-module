@@ -39,6 +39,9 @@ class AuthService:
     async def reset_password_request(self, login: str, session: AsyncSession) -> None:
         user: UserOutDto = await self.user_service.get_user_by_login(login, session)
         if user is None:
+            user: UserOutDto = await self.user_service.get_user_by_mail(login, session)
+
+        if user is None:
             raise CredentialsException()
 
         token = generate_verification_token_mail(user.mail)

@@ -13,6 +13,12 @@ class UserRepository:
         )
         return user.scalar_one_or_none()
 
+    async def get_user_by_mail(self, mail: str, session: AsyncSession) -> User | None:
+        user = await session.execute(
+            select(User).where(and_(User.mail == mail, User.is_verify == True))
+        )
+        return user.scalar_one_or_none()
+
     async def create_user(self, user_data: UserRegistrationDto, session: AsyncSession) -> User:
         user: User = User(
             login=user_data.login,

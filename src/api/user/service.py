@@ -14,6 +14,10 @@ class UserService:
         user: User = await self.user_repository.get_user_by_login(login, session)
         return UserOutDto.from_user(user) if user is not None else None
 
+    async def get_user_by_mail(self, mail: str, session: AsyncSession) -> UserOutDto | None:
+        user: User = await self.user_repository.get_user_by_mail(mail, session)
+        return UserOutDto.from_user(user) if user is not None else None
+
     async def create_user(self, user_data: UserRegistrationDto, session: AsyncSession) -> UserOutDto | None:
         user: User = await self.user_repository.create_user(user_data, session)
         return UserOutDto.from_user(user) if user is not None else None
