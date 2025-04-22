@@ -13,6 +13,7 @@ from src.api.yoga_pose.router import router as router_yoga_pose
 from src.api.network.router import router as router_network
 from src.api.result_prediction.router import router as router_result_prediction
 from src.api.report.router import router as router_report
+from src.api.request_to_admin_status.router import router as router_request_to_admin_status
 from alembic import command
 from alembic.config import Config
 
@@ -41,6 +42,7 @@ app.include_router(router_yoga_pose, prefix="/api/yoga_poses", tags=["Позиц
 app.include_router(router_network, prefix="/api/network", tags=["Нейронная сеть"])
 app.include_router(router_result_prediction, prefix="/api/result_prediction", tags=["Результат предсказаний"])
 app.include_router(router_report, prefix="/api/reports", tags=["Сообщения об ошибках"])
+app.include_router(router_request_to_admin_status, prefix="/api/request_to_admin_status", tags=["Запросы на статус администратора"])
 
 
 if __name__ == "__main__":
@@ -58,3 +60,7 @@ if __name__ == "__main__":
         5.3) Такая же проверка как и выше
 """
 
+"""
+    7) Возврат ошибок юзерфрендли
+    8) Добавить функцию на запрос админки
+"""

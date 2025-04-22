@@ -1,3 +1,4 @@
+import math
 from datetime import datetime
 from enum import Enum
 
@@ -11,6 +12,7 @@ class RequestToAdminStatusEnum(Enum):
     waiting: str = "В ожидании"
     rejected: str = "Отклонена"
     accept: str = "Принята"
+    all: str = "Все"
 
 
 class RequestToAdminStatusOutDto(BaseModel):
@@ -26,4 +28,18 @@ class RequestToAdminStatusOutDto(BaseModel):
             user=UserOutDto.from_user(request_to_admin_status.user),
             status=request_to_admin_status.status,
             created_at=str(request_to_admin_status.created_at)
+        )
+
+
+class PaginationRequestToAdminStatusOutDto(BaseModel):
+    page: int
+    all_pages: int
+    requests: list[RequestToAdminStatusOutDto]
+
+    @staticmethod
+    def from_data(requests: list[RequestToAdminStatus], count_items: int, count: int, page: int) -> "PaginationRequestToAdminStatusOutDto":
+        return PaginationRequestToAdminStatusOutDto(
+            page=page,
+            all_pages=math.ceil(count_items / count),
+            requests=[RequestToAdminStatusOutDto.from_request_to_admin_status(request) for request in requests]
         )

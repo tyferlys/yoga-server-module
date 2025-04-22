@@ -13,9 +13,9 @@ router = APIRouter()
 
 @router.post("")
 async def create_report(
-        report_data: ReportCreateDto,
-        user: UserOutDto = Depends(get_current_user_soft),
-        session: AsyncSession = Depends(get_session),
-        service: ReportService = Depends(ReportService)
+    report_data: ReportCreateDto,
+    user: UserOutDto = Depends(get_current_user_soft),
+    session: AsyncSession = Depends(get_session),
+    service: ReportService = Depends(ReportService)
 ):
     return await service.create_report(user, report_data, session)
