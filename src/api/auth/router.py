@@ -54,7 +54,7 @@ async def verify_mail(
     _ = await auth_service.verify_token(token, session)
     return """
         <!DOCTYPE html>
-            <html lang="ru">
+        <html lang="ru">
             <head>
                 <meta charset="UTF-8">
                 <title>Подтверждение аккаунта</title>
@@ -77,13 +77,24 @@ async def verify_mail(
                     }
                     .message-box h1 {
                         font-size: 24px;
-                        margin: 0;
+                        margin: 0 0 20px;
+                    }
+                    .message-box a {
+                        display: inline-block;
+                        margin-top: 10px;
+                        color: #007BFF;
+                        text-decoration: none;
+                        font-size: 16px;
+                    }
+                    .message-box a:hover {
+                        text-decoration: underline;
                     }
                 </style>
             </head>
             <body>
                 <div class="message-box">
                     <h1>Аккаунт был успешно подтвержден</h1>
+                    <a href="http://yoga-project-network.ru/auth/login">Перейти на страницу авторизации</a>
                 </div>
             </body>
         </html>
