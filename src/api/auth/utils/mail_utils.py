@@ -18,7 +18,7 @@ def verify_token_mail(token: str) -> str | None:
         return None
 
 def send_verification_email(mail: str, token: str):
-    text = f"Для подтверждения регистрации перейдите по ссылке: http://147.45.141.253:{settings.PORT_SERVER}/api/auth/verify/{token}"
+    text = f"Для подтверждения регистрации перейдите по ссылке: http://yoga-project-network.ru/auth/login/{token}"
     message = """\
     From: %s
     To: %s
