@@ -32,7 +32,12 @@ def get_password_hash(password) -> str:
 
 async def authenticate_user(login: str, password: str, session: AsyncSession) -> UserOutDto | None:
     user: UserOutDto = await user_service.get_user_by_login(login, session)
-    if not user or not verify_password(password, user.password):
+    if not user:
+        user: UserOutDto = await user_service.get_user_by_mail(login, session)
+        if not user:
+            raise CredentialsException()
+
+    if not verify_password(password, user.password):
         raise CredentialsException()
 
     return user
