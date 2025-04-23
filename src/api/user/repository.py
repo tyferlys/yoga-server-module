@@ -29,7 +29,7 @@ class UserRepository:
             mail=user_data.mail,
             password=user_data.password,
             is_admin=False,
-            permission_study=False,
+            permission_study=True,
             is_verify=False
         )
         session.add(user)
