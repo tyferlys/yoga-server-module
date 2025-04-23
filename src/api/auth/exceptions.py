@@ -18,3 +18,7 @@ class CredentialsExceptionPassword(HTTPException):
 class LoginExistsException(HTTPException):
     def __init__(self):
         super().__init__(status.HTTP_409_CONFLICT, "Пользователь с таким логином уже существует")
+
+class MailExistsException(HTTPException):
+    def __init__(self):
+        super().__init__(status.HTTP_409_CONFLICT, "Пользователь с такой почтой уже существует")

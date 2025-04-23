@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.auth.exceptions import LoginExistsException, CredentialsException
+from src.api.auth.exceptions import LoginExistsException, CredentialsException, MailExistsException
 from src.api.auth.schemas import Token, ResetPasswordDto
 from src.api.auth.utils.auth_utils import authenticate_user, create_access_token, get_password_hash
 from src.api.auth.utils.mail_utils import generate_verification_token_mail, send_verification_email, verify_token_mail, \
@@ -24,6 +24,10 @@ class AuthService:
         user: UserOutDto = await self.user_service.get_user_by_login(user_data.login, session)
         if user is not None:
             raise LoginExistsException()
+        user: UserOutDto = await self.user_service.get_user_by_mail(user_data.mail, session)
+        if user is not None:
+            raise MailExistsException()
+
         user_data.password = get_password_hash(user_data.password)
 
         user_created = await self.user_service.create_user(user_data, session)
