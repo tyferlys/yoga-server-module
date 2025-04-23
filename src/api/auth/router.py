@@ -45,60 +45,14 @@ async def auth(
     return result
 
 
-@router.get("/verify/{token}", response_class=HTMLResponse)
+@router.get("/verify/{token}")
 async def verify_mail(
     token: str,
     auth_service: AuthService = Depends(AuthService),
     session: AsyncSession = Depends(get_session)
-):
+) -> None:
     _ = await auth_service.verify_token(token, session)
-    return """
-        <!DOCTYPE html>
-        <html lang="ru">
-            <head>
-                <meta charset="UTF-8">
-                <title>Подтверждение аккаунта</title>
-                <style>
-                    body {
-                        background-color: #f4f6f8;
-                        font-family: Arial, sans-serif;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        height: 100vh;
-                        margin: 0;
-                    }
-                    .message-box {
-                        background-color: #ffffff;
-                        padding: 40px 60px;
-                        border-radius: 12px;
-                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-                        text-align: center;
-                    }
-                    .message-box h1 {
-                        font-size: 24px;
-                        margin: 0 0 20px;
-                    }
-                    .message-box a {
-                        display: inline-block;
-                        margin-top: 10px;
-                        color: #007BFF;
-                        text-decoration: none;
-                        font-size: 16px;
-                    }
-                    .message-box a:hover {
-                        text-decoration: underline;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="message-box">
-                    <h1>Аккаунт был успешно подтвержден</h1>
-                    <a href="http://yoga-project-network.ru/auth/login">Перейти на страницу авторизации</a>
-                </div>
-            </body>
-        </html>
-    """
+    return None
 
 @router.post("/registration")
 async def registration(
