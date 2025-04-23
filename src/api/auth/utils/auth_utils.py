@@ -10,7 +10,7 @@ from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from config import get_settings
-from src.api.auth.exceptions import CredentialsException
+from src.api.auth.exceptions import CredentialsException, CredentialsExceptionNotFound, CredentialsExceptionPassword
 from src.api.auth.schemas import NonExceptionOAuth2PasswordBearer
 from src.api.user.schemas import UserOutDto
 from src.api.user.service import UserService
@@ -35,10 +35,10 @@ async def authenticate_user(login: str, password: str, session: AsyncSession) ->
     if not user:
         user: UserOutDto = await user_service.get_user_by_mail(login, session)
         if not user:
-            raise CredentialsException()
+            raise CredentialsExceptionNotFound()
 
     if not verify_password(password, user.password):
-        raise CredentialsException()
+        raise CredentialsExceptionPassword()
 
     return user
 
