@@ -1,4 +1,5 @@
 import datetime
+from operator import and_
 from typing import Tuple
 
 from sqlalchemy import select, desc, func, update
@@ -69,6 +70,13 @@ class ResultPredictionRepository:
         )).scalar_one_or_none()
 
         return result_prediction
+
+    async def get_result_prediction_by_date(self,  begin_date: datetime, end_date: datetime, session: AsyncSession) -> list[ResultPrediction]:
+        result_predictions = (await session.execute(
+            select(ResultPrediction)
+            .where(and_(ResultPrediction.created_at >= begin_date, ResultPrediction.created_at <= end_date))
+        )).scalars().all()
+        return list(result_predictions)
 
     async def put_result_prediction(self, id_result_prediction: int, result_prediction_data: ResultPredictionPutDto, session: AsyncSession):
         await session.execute(

@@ -14,6 +14,8 @@ from src.api.network.router import router as router_network
 from src.api.result_prediction.router import router as router_result_prediction
 from src.api.report.router import router as router_report
 from src.api.request_to_admin_status.router import router as router_request_to_admin_status
+from src.api.rept.router import router as router_rept
+
 from alembic import command
 from alembic.config import Config
 
@@ -43,10 +45,11 @@ app.include_router(router_network, prefix="/api/network", tags=["Нейронн�
 app.include_router(router_result_prediction, prefix="/api/result_prediction", tags=["Результат предсказаний"])
 app.include_router(router_report, prefix="/api/reports", tags=["Сообщения об ошибках"])
 app.include_router(router_request_to_admin_status, prefix="/api/request_to_admin_status", tags=["Запросы на статус администратора"])
+app.include_router(router_rept, prefix="/api/rept", tags=["Отчеты"])
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=int(settings.PORT_SERVER))
+    uvicorn.run(app, host="127.0.0.1", port=int(settings.PORT_SERVER))
 
 """
     По поводу ограничения к запросам:
