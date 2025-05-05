@@ -152,7 +152,7 @@ class ReptService:
         ws.cell(row=next_row + 2, column=2, value="Транслитерация")
         ws.cell(row=next_row + 2, column=3, value="Название асаны на Русском")
         ws.cell(row=next_row + 2, column=4, value="Перевод названия асаны")
-        ws.cell(row=next_row + 2, column=4, value="Количество предсказаний с этой асанами")
+        ws.cell(row=next_row + 2, column=5, value="Количество предсказаний с этой асанами")
         for cell in ws[next_row + 2]:
             cell.font = bold_font
 
@@ -161,7 +161,7 @@ class ReptService:
             ws.cell(row=i + next_row + 3, column=2, value=df_asans_not_exists["right_transliteration"].iloc[i])
             ws.cell(row=i + next_row + 3, column=3, value=df_asans_not_exists["right_answer_russian"].iloc[i])
             ws.cell(row=i + next_row + 3, column=4, value=df_asans_not_exists["right_answer_russian_interpretation"].iloc[i])
-            ws.cell(row=i + next_row + 3, column=4, value=df_asans_not_exists["count"].iloc[i])
+            ws.cell(row=i + next_row + 3, column=5, value=df_asans_not_exists["count"].iloc[i])
 
         for col_cells in ws.columns:
             max_len = max((len(str(cell.value)) if cell.value else 0) for cell in col_cells)

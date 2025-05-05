@@ -32,16 +32,6 @@ async def auth(
 ) -> Token:
 
     result = await auth_service.auth_user(user_data.login, user_data.password, session)
-    response.set_cookie(
-        key="access_token",
-        value=result.access_token,
-        httponly=False,  # Защищает cookie от доступа через JavaScript
-        secure=False,  # Если у вас нет HTTPS, установите это в False
-        samesite="none",
-        expires=60 * 60 * 24 * 31,
-        max_age=60 * 60 * 24 * 31,
-        path='/',
-    )
     return result
 
 
